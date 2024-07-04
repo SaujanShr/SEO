@@ -3,12 +3,12 @@
 #include <fstream>
 #include <string>
 
-const std::string secretsFileLocation = "secrets.json";
+const std::string SECRETS_FILE_LOCATION = "secrets.json";
 
 Json::Value SecretsReader::getSecretsValue() {
     Json::Value secretsValue;
 
-    std::ifstream secretsFile(secretsFileLocation);
+    std::ifstream secretsFile(SECRETS_FILE_LOCATION);
     secretsFile >> secretsValue;
 
     return secretsValue;
@@ -21,7 +21,6 @@ MySQLConnectionDetails SecretsReader::getConnectionDetails() {
     std::string server = connectionDetailsValue["server"].asString();
     std::string username = connectionDetailsValue["username"].asString();
     std::string password = connectionDetailsValue["password"].asString();
-    std::string schema = connectionDetailsValue["schema"].asString();
 
-    return MySQLConnectionDetails { server, username, password, schema };
+    return MySQLConnectionDetails { server, username, password };
 }

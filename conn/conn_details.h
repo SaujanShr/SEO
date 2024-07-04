@@ -7,7 +7,6 @@ struct MySQLConnectionDetails {
     std::string server;
     std::string username;
     std::string password;
-    std::string schema;
 };
 
 #endif

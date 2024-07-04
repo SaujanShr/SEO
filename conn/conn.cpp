@@ -3,6 +3,8 @@
 #include <cppconn/driver.h>
 #include <cppconn/statement.h>
 
+const std::string SCHEMA = "search";
+
 MySQLConnector::MySQLConnector(const MySQLConnectionDetails details) {
     conn = getConnection(details);
 }
@@ -11,12 +13,11 @@ std::unique_ptr<sql::Connection> MySQLConnector::getConnection(const MySQLConnec
     const std::string &server = details.server;
     const std::string &username = details.username;
     const std::string &password = details.password;
-    const std::string &schema = details.schema;
 
     sql::Driver *driver = get_driver_instance();
     
     std::unique_ptr<sql::Connection> conn(driver->connect(server, username, password));
-    conn->setSchema(schema);
+    conn->setSchema(SCHEMA);
 
     return conn;
 }
