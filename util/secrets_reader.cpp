@@ -5,7 +5,7 @@
 
 const std::string SECRETS_FILE_LOCATION = "secrets.json";
 
-Json::Value SecretsReader::getSecretsValue() {
+static Json::Value getSecretsValue() {
     Json::Value secretsValue;
 
     std::ifstream secretsFile(SECRETS_FILE_LOCATION);
@@ -18,9 +18,9 @@ MySQLConnectionDetails SecretsReader::getConnectionDetails() {
     const Json::Value secretsValue = getSecretsValue();
     const Json::Value &connectionDetailsValue = secretsValue["connectionDetails"];
 
-    std::string server = connectionDetailsValue["server"].asString();
-    std::string username = connectionDetailsValue["username"].asString();
-    std::string password = connectionDetailsValue["password"].asString();
+    const std::string &server = connectionDetailsValue["server"].asString();
+    const std::string &username = connectionDetailsValue["username"].asString();
+    const std::string &password = connectionDetailsValue["password"].asString();
 
     return MySQLConnectionDetails { server, username, password };
 }

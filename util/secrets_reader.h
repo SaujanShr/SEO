@@ -5,12 +5,8 @@
 
 #include "../model/conn_details.h"
 
-class SecretsReader {
-private:
-    static Json::Value getSecretsValue();
-
-public:
-    static MySQLConnectionDetails getConnectionDetails();
-};
+namespace SecretsReader {
+    MySQLConnectionDetails getConnectionDetails();
+}
 
 #endif

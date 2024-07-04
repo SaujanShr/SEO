@@ -10,18 +10,16 @@
 
 class MySQLConnector {
 private:
-    std::unique_ptr<sql::Connection> conn;
+    const std::unique_ptr<sql::Connection> conn;
 
-    std::unique_ptr<sql::Connection> getConnection(const MySQLConnectionDetails details);
-
-    std::unique_ptr<sql::ResultSet> getQueryResults();
-
-    std::vector<SearchResult> processQueryResults(std::unique_ptr<sql::ResultSet> queryResults);
+    const std::unique_ptr<sql::Connection> getConnection(const MySQLConnectionDetails &details) const;
 
 public:
-    MySQLConnector(const MySQLConnectionDetails details);
+    MySQLConnector(const MySQLConnectionDetails details): conn(getConnection(details)) {};
 
-    std::vector<SearchResult> getResults();
+    const std::unique_ptr<sql::ResultSet> query(const std::string &sql) const;
+
+    void execute(const std::string &sql) const;
 };
 
 #endif
