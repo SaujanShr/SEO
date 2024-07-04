@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "utils/secrets_reader.h"
+#include "util/secrets_reader.h"
 #include "conn/conn.h"
 
 int main() {
@@ -8,11 +8,7 @@ int main() {
 
     MySQLConnector conn(mySQL_Details);
 
-    std::unique_ptr<sql::ResultSet> res = conn.query("SHOW SCHEMAS;");
-
-    while (res->next()) {
-        std::cout << res->getString(1) << std::endl;
-    }
+    std::vector<SearchResult> results = conn.getResults();
 
     return -1;
 }

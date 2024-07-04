@@ -3,7 +3,7 @@
 
 #include <jsoncpp/json/json.h>
 
-#include "../conn/conn_details.h"
+#include "../model/conn_details.h"
 
 class SecretsReader {
 private:

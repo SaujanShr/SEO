@@ -4,8 +4,9 @@
 #include <string>
 #include <cppconn/resultset.h>
 
+#include "../model/conn_details.h"
+#include "../model/search_result.h"
 #include "mysql_connection.h"
-#include "conn_details.h"
 
 class MySQLConnector {
 private:
@@ -13,10 +14,14 @@ private:
 
     std::unique_ptr<sql::Connection> getConnection(const MySQLConnectionDetails details);
 
+    std::unique_ptr<sql::ResultSet> getQueryResults();
+
+    std::vector<SearchResult> processQueryResults(std::unique_ptr<sql::ResultSet> queryResults);
+
 public:
     MySQLConnector(const MySQLConnectionDetails details);
 
-    std::unique_ptr<sql::ResultSet> query(std::string sql);
+    std::vector<SearchResult> getResults();
 };
 
 #endif
