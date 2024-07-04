@@ -1,7 +1,7 @@
 #include "conn.h"
 
 #include <cppconn/driver.h>
-#include <string>
+#include <cppconn/statement.h>
 
 MySQLConnector::MySQLConnector(const MySQLConnectionDetails details) {
     conn = getConnection(details);
@@ -15,8 +15,14 @@ std::unique_ptr<sql::Connection> MySQLConnector::getConnection(const MySQLConnec
 
     sql::Driver *driver = get_driver_instance();
     
-    std::unique_ptr<sql::Connection> conn = std::unique_ptr<sql::Connection>(driver->connect(server, username, password));
+    std::unique_ptr<sql::Connection> conn(driver->connect(server, username, password));
     conn->setSchema(schema);
 
     return conn;
+}
+
+std::unique_ptr<sql::ResultSet> MySQLConnector::query(std::string sql) {
+    std::unique_ptr<sql::Statement> stmt(conn->createStatement());
+    
+    return std::unique_ptr<sql::ResultSet>(stmt->executeQuery(sql));
 }

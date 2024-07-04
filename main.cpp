@@ -4,9 +4,15 @@
 #include "conn/conn.h"
 
 int main() {
-    MySQLConnectionDetails details = SecretsReader::getConnectionDetails();
+    const MySQLConnectionDetails mySQL_Details = SecretsReader::getConnectionDetails();
 
-    MySQLConnector conn = MySQLConnector(details);
+    MySQLConnector conn(mySQL_Details);
+
+    std::unique_ptr<sql::ResultSet> res = conn.query("SHOW SCHEMAS;");
+
+    while (res->next()) {
+        std::cout << res->getString(1) << std::endl;
+    }
 
     return -1;
 }
