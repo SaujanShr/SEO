@@ -9,11 +9,10 @@ struct SearchResult {
     std::string title;
     std::string content;
     std::time_t time;
-    int64_t ref;
 
     // Similarity to search query
     // Not stored in db
-    float sim;
+    double relevance;
 };
 
 #endif

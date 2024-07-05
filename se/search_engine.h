@@ -15,11 +15,13 @@ private:
 
     const MySQLConnector getConnector() const;
 
-    const std::unique_ptr<sql::ResultSet> getQueryResults() const;
+    const std::unique_ptr<sql::ResultSet> getSearchResults(const std::string &query) const;
 
     float computeSimilarity(const std::string &query, const std::string &title, const std::string &content) const;
 
-    std::vector<SearchResult> processQueryResults(const std::string &query, const std::unique_ptr<sql::ResultSet> &queryResults) const;
+    std::vector<SearchResult> processSearchResults(const std::unique_ptr<sql::ResultSet> &queryResults) const;
+
+    const std::vector<SearchResult> getDummyResults() const;
 
     const std::string getSQL_Value(const SearchResult &result) const;
 
@@ -33,13 +35,13 @@ public:
 
     void populateResults() const;
 
-    void search(std::string query);
+    void search(const std::string &query);
 
-    void sortByRelevance();
+    void sortByRelevance() { sortSearchResults(Comparator::compareRelevance); }
 
-    void sortByTitle(bool rev = false);
+    void sortByTitle(bool rev = false) { rev ? sortSearchResults(Comparator::compareTitle) : sortSearchResults(Comparator::compareTitleRev); }
 
-    void sortByTime(bool rev = false);
+    void sortByTime(bool rev = false) { rev ? sortSearchResults(Comparator::compareTime) : sortSearchResults(Comparator::compareTimeRev); }
 
     const std::vector<SearchResult> &getSearchResults() const { return searchResults; }
 };
