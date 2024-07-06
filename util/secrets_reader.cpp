@@ -1,7 +1,6 @@
 #include "secrets_reader.h"
 
 #include <fstream>
-#include <string>
 
 const std::string SECRETS_FILE_LOCATION = "secrets.json";
 

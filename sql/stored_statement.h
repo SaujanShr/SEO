@@ -7,7 +7,7 @@ namespace StoredStmt {
     const std::string FLUSH_RESULTS = "DELETE * FROM results;";
 
     const std::string GET_RESULTS_TEMPLATE = 
-        "SELECT uuid, title, content, time, ref, levenshtein_similarity({}, title) + levenshtein_similarity({}, content) / 3 AS relevance"
+        "SELECT uuid, title, content, time, ref, levenshtein_similarity({}, title) AS relevance"
         "FROM results"
         "WHERE relevance > 10;";
 

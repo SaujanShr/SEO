@@ -1,14 +1,16 @@
 #include "conn.h"
 
+#include "../util/secrets_reader.h"
+
 #include <ctime>
-#include <fmt/format.h>
 #include <cppconn/driver.h>
 #include <cppconn/statement.h>
-#include <cppconn/resultset.h>
 
 const std::string SCHEMA = "search";
 
-const std::unique_ptr<sql::Connection> MySQLConnector::getConnection(const MySQLConnectionDetails &details) const {
+static const std::unique_ptr<sql::Connection> getConnection() {
+    const MySQLConnectionDetails details = SecretsReader::getConnectionDetails();
+
     const std::string &server = details.server;
     const std::string &username = details.username;
     const std::string &password = details.password;
@@ -19,6 +21,8 @@ const std::unique_ptr<sql::Connection> MySQLConnector::getConnection(const MySQL
 
     return std::unique_ptr<sql::Connection>(conn);
 }
+
+MySQLConnector::MySQLConnector(): conn(getConnection()) {}
 
 const std::unique_ptr<sql::ResultSet> MySQLConnector::query(const std::string &sql) const {
     sql::ResultSet *queryResults = conn
